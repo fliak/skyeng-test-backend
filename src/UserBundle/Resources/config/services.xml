@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="custom_user_provider" class="UserBundle\UserProvider\UserProvider">
+            <argument type="service" id="app.user.user_manager" />
+        </service>
+
+        <service id="custom_authenticator" class="UserBundle\Security\Authentication\TesterAuthenticator" public="false">
+        </service>
+
+
+        <service id="app.user.exception_listener" class="UserBundle\EventListener\ExceptionListener">
+            <tag name="kernel.event_listener" event="kernel.exception" />
+        </service>
+
+        <service id="app.user.user_repository" class="Doctrine\ODM\MongoDB\DocumentRepository">
+            <factory service="doctrine_mongodb.odm.document_manager"
+                     method="getRepository"
+            />
+
+            <argument>UserBundle\Model\User</argument>
+
+        </service>
+
+        <service id="app.user.user_manager" class="UserBundle\Manager\UserManager">
+            <argument type="service" id="app.user.user_repository" />
+        </service>
+
+        <service id="app.controller.stub_controller" class="UserBundle\Controller\StubController">
+        </service>
+
+    </services>
+</container>

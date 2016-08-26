@@ -1,0 +1,15 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+
+
+#Stubs for simple_form authentication
+login:
+    path: /login
+#    methods: [GET, POST]
+#    defaults: { _controller: app.controller.stub_controller:stubAction }
+
+
+logout:
+    path: /logout
